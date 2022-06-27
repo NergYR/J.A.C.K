@@ -1,3 +1,3 @@
 ## J.A.C.K
-[]: # Language: markdown
-[]: # Path: README.md
+[language]: # Language: markdown
+[path]: # Path: README.md
