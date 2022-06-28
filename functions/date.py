@@ -17,6 +17,12 @@ class Time :
 
 
     def sayHourOfDay():
+        '''
+        ## SayHourOfDay() 
+        This function is a tts function, say the hour of the day \n
+        return string : the hour of the day
+        
+        '''
         engine = tts.init()
         engine.say("il est actuellement " + Time.d.strftime("%H") + "heure")
         engine.runAndWait()
@@ -25,6 +31,11 @@ class Time :
 
 
     def sayDateTime():
+        '''
+        ## SayDateTime()
+        This function is a tts function, say the date and time of the day \n
+        return string : the date and time of the day format 'Hour:Minute'
+        '''
         engine = tts.init()
         engine.say("il est actuellement " + Time.d.strftime("%H") + "heure" + Time.d.strftime("%M"))
         engine.runAndWait()
