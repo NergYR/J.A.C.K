@@ -3,20 +3,12 @@ import json
 import base64
 import pyttsx3 as tts 
 
-
 config_file = "C:/Users/energ/Desktop/Code/Python/J.A.C.K/config.json"
 
-user = json.load(open(config_file))['outlook_user']
-password = json.load(open(config_file))['outlook_password']
+user = json.load(open(config_file))['google_user']
+password = json.load(open(config_file))['google_password']
 password = base64.b64decode(password)
-# avcdwnwlcjhkfsvr
-#password_encode = "YXZjZHdud2xjamhrZnN2cg=="
-#password_decode = base64.b64decode(password_encode)
-
-
-class TTS:
-    engine = tts.init()
-    engine.runAndWait()
+#ttueyekzcyncwdgx
 
 
 class Mail:
@@ -25,7 +17,7 @@ class Mail:
     def sendMail(object, to, message):
         body = 'Subject:  '+ object +'  \n\n\n' + message 
         try:
-            server = smtplib.SMTP('smtp-mail.outlook.com', 587)
+            server = smtplib.SMTP('smtp.gmail.com', 587)
             print(password.decode())
             print(user)
             print(to)
