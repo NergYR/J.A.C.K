@@ -1,7 +1,9 @@
+from calendar import calendar
 import smtplib
 import json
 import base64
 import pyttsx3 as tts 
+from functions import date
 
 import datetime
 import pickle
@@ -67,6 +69,38 @@ class Calendar:
 
         service = build('calendar', 'v3', credentials=creds)
         return service
-    
+    def addEvent(Stime, Etime, name, description="none", location="Endorium Group"):
+        service = Calendar.get_calendar_service()
+        timezone = date.timezone#"Europe/Paris"#
+        """
+        Add new event in Google Calendar 
+        addEvent(Stime["YYYY-MM-DDTHH:MM:SS"],Etime["YYYY-MM-DDTHH:MM:SS"],name,description, (location))
 
-Calendar.get_calendar_service()
+        """ 
+
+        event = {
+        'summary': name,
+        'location': location,
+        'description': description,
+        'start': {
+            'dateTime': Stime,
+            'timeZone': str(timezone),
+        },
+        'end': {
+            'dateTime': Etime,
+            'timeZone': str(timezone),
+        },
+
+
+        'reminders': {
+            'useDefault': False,
+            'overrides': [
+            {'method': 'email', 'minutes': 24 * 60},
+            {'method': 'popup', 'minutes': 10},
+            ],
+        },
+        }
+
+        event = service.events().insert(calendarId='xzeystape@gmail.com', body=event).execute()
+        print('Event created: %s' % (event.get('htmlLink')))
+
