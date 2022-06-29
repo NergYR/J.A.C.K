@@ -2,6 +2,11 @@ import smtplib
 import json
 import base64
 import pyttsx3 as tts 
+import win32com.client
+from win32com.client import Dispatch
+from functions import date
+
+outlook = win32com.client.Dispatch("Outlook.Application")
 
 
 config_file = "C:/Users/energ/Desktop/Code/Python/J.A.C.K/config.json"
@@ -40,4 +45,23 @@ class Mail:
         return True
 
 
-    
+class Calendar:
+    def sendMeeting(start, subject, duration, location="none"):
+        '''
+        start format : yyyy-MM-dd hh:mm \n
+        subject : string \n
+        duration : in minute, integer \n
+        location : string \n  
+        
+        '''
+        
+
+        
+        appt = outlook.CreateItem(1) # AppointmentItem
+        appt.Start = start # yyyy-MM-dd hh:mm
+        appt.Subject = subject #
+        appt.Duration = duration # In minutes (60 Minutes)
+        appt.Location = location
+
+        appt.Save()
+        appt.Send()
