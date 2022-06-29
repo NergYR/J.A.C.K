@@ -5,7 +5,7 @@ import base64
 import pyttsx3 as tts 
 from functions import date
 
-import datetime
+from datetime import datetime, timedelta
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -103,7 +103,14 @@ class Calendar:
 
         event = service.events().insert(calendarId='xzeystape@gmail.com', body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
+        print("Event added to Google Calendar %s" % (event.get('eventId')))
+        
+        
+        
     def getEvents():
+        '''
+        List 10 Events from Google Calendar
+        '''
         service = Calendar.get_calendar_service()
         now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
         print('Getting List o 10 events')
@@ -118,4 +125,38 @@ class Calendar:
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             print(start, event['summary'])
+            
+            
+    def updateEvents(eventID, name, Etime, Stime, description="none"):
+        '''
+        ## Update an event in Google Calendar \n
+        Usage : ``updateEvents(eventID, name, Etime, Stime, description, location)`` \n
+        ``id`` = eventID \n
+        ``name`` = name of the event (string) \n
+        ``Etime`` = End Time => YYYY-MM-DDTHH:MM:SS \n
+        ``Stime`` = Start Time => YYYY-MM-DDTHH:MM:SS \n
+        ``description`` = description (optional) (string) \n
+        ``location`` = location (optional) (string) \n
+        '''
+        service = Calendar.get_calendar_service()
+        timezone = date.timezone#"Europe/Paris"#
+
+
+        event_result = service.events().update(
+          calendarId='xzeystape@gmail.com',
+          eventId= eventID,
+          body={
+           "summary": name,
+           "description": description,
+           "start": {"dateTime": Stime, "timeZone": str(timezone)},
+           "end": {"dateTime": Etime, "timeZone": str(timezone)},
+           },
+        ).execute()
+
+        print("updated event")
+        print("id: ", event_result['id'])
+        print("summary: ", event_result['summary'])
+        print("starts at: ", event_result['start']['dateTime'])
+        print("ends at: ", event_result['end']['dateTime'])
+
 
