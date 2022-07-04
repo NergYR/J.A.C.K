@@ -1,4 +1,9 @@
 import smtplib
+import email
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import json
 import base64
 import pyttsx3 as tts 
@@ -43,6 +48,16 @@ class Mail:
             print("Error: unable to send email")
             return False
         return True
+    
+    
+    def sendHTMLmail(object, to, message):
+        email_to_send = MIMEMultipart("alternative")
+        email_to_send["Subject"] = object
+        email_to_send["From"] = user
+        email_to_send["To"] = to
+        
+        
+    
 
 
 class Calendar:
